@@ -79,13 +79,30 @@ oaisoftwarealliance/oai-nr-ue:2026.w38
 mongo:6.0
 ```
 
-업스트림이 태그를 옮기거나 지울 수 있으므로, **우리가 돌렸던 이미지 자체를 이 저장소의
-릴리즈에 올려 두었다.** 그쪽이 더 확실하다.
+업스트림이 태그를 옮기거나 지울 수 있다. **인터넷에서 못 구하는 상황을 전제로, 우리가
+실제로 돌렸던 이미지 자체를 이 저장소 릴리즈(`images-v1`)에 올려 두었다.** 이 저장소
+하나만 있으면 복원된다.
 
 ```bash
-# 릴리즈에서 받은 뒤
-zstd -d -c open5gs-images.tar.zst | docker load
+./bin/load-images.sh            # gh 로 내려받아 체크섬 확인 후 docker load
 ```
+
+| 파일 | 담긴 이미지 | 압축 |
+|---|---|---|
+| `docker_dns.tar.zst` | `docker_dns:latest` + ghcr `:master` | 109 MB |
+| `docker_metrics.tar.zst` | `docker_metrics` | 306 MB |
+| `docker_mysql.tar.zst` | `docker_mysql` | 184 MB |
+| `docker_pyhss.tar.zst` | `docker_pyhss` | 308 MB |
+| `docker_rtpengine.tar.zst` | `docker_rtpengine` | 437 MB |
+| `docker_open5gs.tar.zst` | `docker_open5gs` | 456 MB |
+| `docker_kamailio.tar.zst` | `docker_kamailio` | 594 MB |
+| `docker_srsran.tar.zst` | `docker_srsran` | 1003 MB |
+| `grafana-11.3.0.tar.zst` | `grafana/grafana:11.3.0` | 121 MB |
+| `mongo-6.0.tar.zst` | `mongo:6.0` | 247 MB |
+| `oai-rfsim-2026.w38.tar.zst` | `oai-gnb`, `oai-nr-ue` | 266 MB |
+
+합계 4.0 GB. compose 가 쓰는 **로컬 태그(`docker_*:latest`)와 ghcr 태그를 둘 다** 담았으므로
+적재 후 바로 기동된다. `SHA256SUMS` 로 무결성을 확인한다.
 
 ## 4. 비밀값 채우기
 
