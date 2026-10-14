@@ -44,11 +44,23 @@ step "4. 터널 인터페이스 $IFACE"
 ip4=$(docker exec "$UEC" ip -4 -o addr show "$IFACE" 2>/dev/null | grep -oE 'inet [0-9.]+' | cut -d' ' -f2)
 [ -n "$ip4" ] && ok "$ip4" || ng "없음"
 
-step "5. 외부 통신 (8.8.8.8)"
+# 이 UE 는 IMS 시험용이라 `ims` DNN 을 요청한다(configs/oai/nr-ue.n78.rfsim.conf).
+# IMS 망은 외부 인터넷으로 라우팅되지 않으므로 8.8.8.8 로 재면 당연히 실패한다.
+# 사용자 평면이 섰는지는 **자기 망의 UPF 게이트웨이**로 재는 것이 맞다.
+step "5. 사용자 평면 (UPF 게이트웨이)"
 if [ -n "$ip4" ]; then
+  gw="${ip4%.*}.1"
+  r=$(docker exec "$UEC" ping -c3 -W2 -I "$IFACE" "$gw" 2>&1 | grep -oE '[0-9]+% packet loss')
+  [ "$r" = "0% packet loss" ] && ok "$gw $r" || ng "$gw $r"
+else ng "터널 없어 건너뜀"; fi
+
+step "5b. 외부 통신 (참고)"
+if [ -n "$ip4" ] && [ "${ip4#10.45.}" != "$ip4" ]; then
   r=$(docker exec "$UEC" ping -c3 -W2 -I "$IFACE" 8.8.8.8 2>&1 | grep -oE '[0-9]+% packet loss')
   [ "$r" = "0% packet loss" ] && ok "$r" || ng "$r"
-else ng "터널 없어 건너뜀"; fi
+else
+  ok "건너뜀 — 이 UE 는 ims DNN($ip4). 외부 통신은 모뎀·단말로 확인한다"
+fi
 
 step "6. 정본 vs 런타임 설정 일치"
 d=$("$P5/bin/deploy-configs.sh" --check 2>&1 | tail -1)

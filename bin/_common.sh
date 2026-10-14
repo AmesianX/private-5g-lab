@@ -9,15 +9,23 @@ P5="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 : "${CORE_PROJECT:=docker_open5gs}"
 export CORE_PROJECT
 
-# upstream 클론(런타임 트리) 위치. 심볼릭이 아니라 이 값이 정본이다.
-# 절대경로로 주거나, P5 기준 상대경로로 준다.
-: "${UPSTREAM_DIR:=$P5/../sdr-tools/docker/docker_open5gs}"
+# upstream 클론(런타임 트리) 위치. 찾는 순서는 셋이다.
+#   1) 환경변수 UPSTREAM_DIR  2) $P5/upstream 심볼릭  3) 우리 장비의 기본 배치
+# 새 컴퓨터에서는 2번만 걸어 주면 된다 — 디렉터리 배치를 따라할 필요가 없다.
+if [ -z "${UPSTREAM_DIR:-}" ]; then
+  if [ -d "$P5/upstream" ]; then
+    UPSTREAM_DIR="$P5/upstream"
+  else
+    UPSTREAM_DIR="$P5/../sdr-tools/docker/docker_open5gs"
+  fi
+fi
 
 resolve_upstream() {
   local d
-  d="$(cd "$UPSTREAM_DIR" 2>/dev/null && pwd)" || {
+  d="$(cd "$UPSTREAM_DIR" 2>/dev/null && pwd -P)" || {
     echo "upstream 클론을 찾을 수 없다: $UPSTREAM_DIR" >&2
-    echo "  bin/_common.sh 의 UPSTREAM_DIR 을 고치거나 환경변수로 지정하라." >&2
+    echo "  해결: ln -s <docker_open5gs 클론 경로> $P5/upstream" >&2
+    echo "  또는: UPSTREAM_DIR=<경로> $0 ..." >&2
     return 1
   }
   [ -f "$d/sa-vonr-deploy.yaml" ] || {

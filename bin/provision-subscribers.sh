@@ -19,6 +19,21 @@ set -a; source "$SECRETS"; set +a
 
 check_only=0; [ "${1:-}" = "--check" ] && check_only=1
 
+# PyHSS 의 subscriber.default_apn 은 apn.apn_id 를 참조하는 외래키다.
+# 빈 데이터베이스에서는 APN 부터 만들지 않으면 가입자 등록이 이렇게 깨진다.
+#   IntegrityError (1452) ... FOREIGN KEY (`default_apn`) REFERENCES `apn` (`apn_id`)
+# apn_id 1=internet, 2=ims 순서가 가입자의 apn_list "1,2" 와 맞아야 한다.
+ensure_apns() {
+  local have
+  have=$(curl -s "$PYHSS/apn/list" | python3 -c 'import json,sys;print(len(json.load(sys.stdin)))' 2>/dev/null || echo 0)
+  [ "${have:-0}" -ge 2 ] && { echo "APN $have 행 (이미 있음)"; return 0; }
+  for a in internet ims; do
+    curl -s -X PUT "$PYHSS/apn/" -H 'Content-Type: application/json' \
+      -d "{\"apn\":\"$a\",\"apn_ambr_dl\":0,\"apn_ambr_ul\":0,\"qci\":9,\"arp_priority\":4,\"arp_preemption_capability\":false,\"arp_preemption_vulnerability\":true,\"charging_characteristics\":\"0800\",\"ip_version\":0,\"nbiot\":false}" \
+      | python3 -c "import json,sys;d=json.load(sys.stdin);print('  APN',d.get('apn'),'id',d.get('apn_id'))"
+  done
+}
+
 # IMSI  MSISDN  KI  OPC  IMEISV
 UES=(
   "${UE1_IMSI:-}|821099994531|${UE1_KI:-}|${UE1_OPC:-}|${UE1_IMEISV:-${UE1_IMEISV:?lab.env 에 UE1_IMEISV 를 넣을 것}}"
@@ -36,6 +51,8 @@ if [ $check_only -eq 1 ]; then
   done
   exit 0
 fi
+
+ensure_apns
 
 for row in "${UES[@]}"; do
   IFS='|' read -r IMSI MSISDN KI OPC IMEISV <<< "$row"
