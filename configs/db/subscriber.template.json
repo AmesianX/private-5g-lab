@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "imsi": "@IMSI@",
+  "msisdn": [
+    "@MSISDN@"
+  ],
+  "imeisv": "@IMEISV@",
+  "mme_host": [],
+  "mm_realm": [],
+  "purge_flag": [],
+  "slice": [
+    {
+      "sst": 1,
+      "default_indicator": true,
+      "session": [
+        {
+          "name": "internet",
+          "type": 1,
+          "qos": {
+            "index": 9,
+            "arp": {
+              "priority_level": 8,
+              "pre_emption_capability": 1,
+              "pre_emption_vulnerability": 2
+            }
+          },
+          "ambr": {
+            "downlink": {
+              "value": 1000000000,
+              "unit": 0
+            },
+            "uplink": {
+              "value": 1000000000,
+              "unit": 0
+            }
+          },
+          "pcc_rule": [
+            {
+              "qos": {
+                "index": 1,
+                "arp": {
+                  "priority_level": 1,
+                  "pre_emption_capability": 1,
+                  "pre_emption_vulnerability": 1
+                },
+                "mbr": {
+                  "downlink": {
+                    "value": 128,
+                    "unit": 1
+                  },
+                  "uplink": {
+                    "value": 128,
+                    "unit": 1
+                  }
+                },
+                "gbr": {
+                  "downlink": {
+                    "value": 128,
+                    "unit": 1
+                  },
+                  "uplink": {
+                    "value": 128,
+                    "unit": 1
+                  }
+                }
+              },
+              "flow": []
+            },
+            {
+              "qos": {
+                "index": 2,
+                "arp": {
+                  "priority_level": 2,
+                  "pre_emption_capability": 1,
+                  "pre_emption_vulnerability": 1
+                },
+                "mbr": {
+                  "downlink": {
+                    "value": 2,
+                    "unit": 2
+                  },
+                  "uplink": {
+                    "value": 2,
+                    "unit": 2
+                  }
+                },
+                "gbr": {
+                  "downlink": {
+                    "value": 1,
+                    "unit": 2
+                  },
+                  "uplink": {
+                    "value": 1,
+                    "unit": 2
+                  }
+                }
+              },
+              "flow": []
+            }
+          ]
+        },
+        {
+          "name": "ims",
+          "type": 1,
+          "pcc_rule": [
+            {
+              "qos": {
+                "index": 1,
+                "arp": {
+                  "priority_level": 1,
+                  "pre_emption_capability": 1,
+                  "pre_emption_vulnerability": 1
+                },
+                "mbr": {
+                  "downlink": {
+                    "value": 128,
+                    "unit": 1
+                  },
+                  "uplink": {
+                    "value": 128,
+                    "unit": 1
+                  }
+                },
+                "gbr": {
+                  "downlink": {
+                    "value": 128,
+                    "unit": 1
+                  },
+                  "uplink": {
+                    "value": 128,
+                    "unit": 1
+                  }
+                }
+              },
+              "flow": []
+            },
+            {
+              "qos": {
+                "index": 2,
+                "arp": {
+                  "priority_level": 2,
+                  "pre_emption_capability": 1,
+                  "pre_emption_vulnerability": 1
+                },
+                "mbr": {
+                  "downlink": {
+                    "value": 2,
+                    "unit": 2
+                  },
+                  "uplink": {
+                    "value": 2,
+                    "unit": 2
+                  }
+                },
+                "gbr": {
+                  "downlink": {
+                    "value": 1,
+                    "unit": 2
+                  },
+                  "uplink": {
+                    "value": 1,
+                    "unit": 2
+                  }
+                }
+              },
+              "flow": []
+            }
+          ],
+          "ambr": {
+            "uplink": {
+              "value": 1,
+              "unit": 3
+            },
+            "downlink": {
+              "value": 1,
+              "unit": 3
+            }
+          },
+          "qos": {
+            "index": 5,
+            "arp": {
+              "priority_level": 1,
+              "pre_emption_capability": 1,
+              "pre_emption_vulnerability": 1
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "security": {
+    "k": "@KI@",
+    "op": null,
+    "opc": "@OPC@",
+    "amf": "8000",
+    "sqn": 0
+  },
+  "ambr": {
+    "downlink": {
+      "value": 1000000000,
+      "unit": 0
+    },
+    "uplink": {
+      "value": 1000000000,
+      "unit": 0
+    }
+  },
+  "access_restriction_data": 32,
+  "network_access_mode": 0,
+  "subscriber_status": 0,
+  "operator_determined_barring": 0,
+  "subscribed_rau_tau_timer": 12,
+  "__v": 0
+}

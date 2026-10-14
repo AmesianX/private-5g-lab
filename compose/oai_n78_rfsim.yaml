@@ -1,0 +1,64 @@
+# OAI gNB + nr-UE, n78 TDD / 30 kHz SCS, rfsimulator 경로 (RF 방사 없음)
+#
+#   pointA  ARFCN 622056 = 3330.84 MHz
+#   SSB     ARFCN 623328 = 3349.92 MHz (GSCN 7742)
+#   carrier 3330.84 ~ 3369.00 MHz, 106 PRB @ 30 kHz
+#   KR 상용 n78 하단(LG U+ 3400 MHz) 대비 31 MHz 이격
+#
+#   기동:  docker compose -f oai_n78_rfsim.yaml up -d
+#   주의:  UE1 IMSI를 srsue_5g_zmq 와 공유하므로 먼저 srsue 를 내릴 것
+
+services:
+  oaignb_rfsim:
+    image: oaisoftwarealliance/oai-gnb:2026.w38
+    container_name: oaignb_rfsim
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      - USE_ADDITIONAL_OPTIONS=--rfsim --log_config.global_log_options level,nocolor,time
+    volumes:
+      - ../configs/oai/gnb.n78.rfsim.conf:/opt/oai-gnb/etc/gnb.conf:ro
+      - /etc/localtime:/etc/localtime:ro
+    expose:
+      - "4043/tcp"
+      - "38412/sctp"
+      - "2152/udp"
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep nr-softmodem >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      default:
+        ipv4_address: 172.22.0.38
+
+  oainrue:
+    image: oaisoftwarealliance/oai-nr-ue:2026.w38
+    container_name: oainrue
+    depends_on:
+      oaignb_rfsim:
+        condition: service_healthy
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+    security_opt:
+      - seccomp:unconfined
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      # -C : DL 캐리어 중심 3349.92 MHz   --ssb 516 : pointA 기준 SSB 시작 부반송파
+      - USE_ADDITIONAL_OPTIONS=--rfsim -r 106 --numerology 1 --band 78 -C 3349920000 --ssb 516 --log_config.global_log_options level,nocolor,time
+    volumes:
+      - ../configs/oai/nr-ue.n78.rfsim.conf:/opt/oai-nr-ue/etc/nr-ue.conf:ro
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      default:
+        ipv4_address: 172.22.0.43
+
+networks:
+  default:
+    external: true
+    name: ${CORE_PROJECT:-docker_open5gs}_default

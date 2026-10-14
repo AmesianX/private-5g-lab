@@ -1,0 +1,49 @@
+# allow-list 방식. 기본은 전부 제외하고 넣을 것만 명시한다.
+# 실수로 비밀값이 딸려 올라가는 것을 막기 위해서다(2026-10-14 ADM1 유출 재발 방지).
+*
+!*/
+
+# 최상위 문서
+!README.md
+!NEXT.md
+!.gitignore
+
+# 제어 스크립트
+!bin/*.sh
+
+# compose
+!compose/*.yaml
+
+# 설정 정본 — 템플릿(.in)만 추적하고 렌더 결과는 제외한다
+!configs/**/*.conf
+!configs/**/*.cfg
+!configs/**/*.yaml
+!configs/**/*.yml
+!configs/**/*.json
+!configs/**/*.in
+!configs/**/*.example
+!configs/dns/ims_zone
+!configs/srsran/libresdr_alphafox02.bin
+
+# 도구
+!tools/*.py
+!tools/*.sh
+!tools/*.csv
+
+# 문서와 화면 증거
+!docs/*.md
+!docs/screenshots/*.png
+
+# ── 아래는 어떤 경우에도 올리지 않는다 ──
+configs/secrets/lab.env
+configs/_backup/
+configs/env/env
+configs/oai/nr-ue.n78.rfsim.conf
+configs/srsran/gnb.yml
+docs/book/
+upstream
+**/__pycache__/
+*.bak
+*.log
+*.pcap
+*.archive

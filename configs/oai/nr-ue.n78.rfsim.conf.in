@@ -1,0 +1,27 @@
+# OAI nr-UE -- n78 TDD / 30 kHz SCS / rfsimulator
+# 형식 기준: openairinterface5g 2026.w37  ci-scripts/conf_files/nrue.uicc.conf
+#
+# 대응 gNB : gnb.n78.rfsim.conf
+#   pointA  ARFCN 622056 = 3330.84 MHz
+#   SSB     ARFCN 623328 = 3349.92 MHz (GSCN 7742)
+#   carrier 3330.84 ~ 3369.00 MHz (106 PRB @ 30 kHz), 중심 = SSB = 3349.92 MHz
+#
+# 가입자 값은 .env 의 UE1_* 와 동일.
+#   OPc = OP XOR AES128_Ki(OP)  (UE1_OP=1111..11 로부터 유도)
+# rfsim 경로이므로 RF 방사 없음 (TCP IQ 교환).
+
+uicc0 = {
+  imsi = "001011234567896";
+  key  = "@UE2_KI@";
+  opc  = "@UE2_OPC@";
+  pdu_sessions = ({ dnn = "ims"; nssai_sst = 1; });
+}
+
+thread-pool = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+
+rfsimulator = (
+  {
+    serveraddr = "172.22.0.38";
+    serverport = 4043;
+  }
+);
