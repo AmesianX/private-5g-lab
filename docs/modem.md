@@ -154,17 +154,19 @@ AT+CREG? / AT+C5GREG?   LTE / 5G 등록 상태
 ModemManager 가 `ttyUSB2`(때로 `ttyUSB3` 까지) 를 점유한다.
 점유 중이면 `mmcli` 로 조회하거나 ModemManager 를 잠시 멈춘다.
 
-## 현재 블로커
+## 블로커 — 2026-10-05 기준, 전부 해소됨
 
-| 항목 | 상태 |
-|---|---|
-| 모뎀 | **확보·동작 확인** |
-| n78 지원 | **확인** |
-| **프로그래머블 USIM** | **없음** — `+CPIN: NOT INSERTED`, 슬롯 2개 모두 비어 있음 |
-| **PC/SC 카드 리더** | **없음** — `pcsc_scan: No reader found`, pcscd inactive |
-| pySim | 리포는 있음 (`sdr-tools/sim/pysim`), 모듈 미설치 |
-| MHF4 피그테일 | 미확인 |
-| 차폐함 / 감쇠기 | 미입고 |
+이 표는 그날의 상태다. 지금은 모두 풀렸고 어디서 풀렸는지를 오른쪽에 적는다.
+
+| 항목 | 2026-10-05 | 해소 |
+|---|---|---|
+| 모뎀 | **확보·동작 확인** | — |
+| n78 지원 | **확인** | — |
+| **프로그래머블 USIM** | 없음 (`+CPIN: NOT INSERTED`) | sysmoISIM-SJA5 발급 ([sim-cards.md](sim-cards.md)) |
+| **PC/SC 카드 리더** | 없음 (`pcsc_scan: No reader found`) | Identiv SCR35xx |
+| pySim | 모듈 미설치 | 설치·사용 중 |
+| MHF4 피그테일 | 미확인 | 확인. 경로별 손실 차 9 dB ([rf-cabling.md](rf-cabling.md)) |
+| 차폐함 / 감쇠기 | 미입고 | 2026-10-15 입고. 누설 검출 한계 아래 ([shielding-measurement.md](shielding-measurement.md)) |
 
 ## USIM 에 넣을 값
 

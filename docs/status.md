@@ -2,7 +2,7 @@
 
 ## 완료
 
-- **5GC + IMS(VoNR)** 25 컨테이너 기동, 종단간 접속/PDU 세션/인터넷 확인
+- **5GC + IMS(VoNR)** 23 컨테이너 기동(+ RAN 3), 종단간 접속/PDU 세션/인터넷 확인
 - **IMS 등록 200 OK** — `tel:9076543210` 할당,
   `Service-Route: <sip:orig@scscf.ims.mnc001.mcc001.3gppnetwork.org:6060;lr>`
 - **MILENAGE 독립 구현 검증** — 계산한 CK/IK 가 PyHSS 로그값과 바이트 단위 일치
@@ -50,16 +50,17 @@ srsue/src/phy/nr/worker_pool.cc:122   scs = 15kHz 고정
 - **SIM 리더(Identiv SCR35xx) + pySim 환경 구축**
 - **알리 공백카드 판정** — 2G GSM 전용으로 확정. 4G/5G 불가 (`docs/sim-cards.md`)
 
-## 중단 지점
+## 중단 지점 — 해소됨
 
-**유효한 USIM 이 없어 상용 단말 접속(RACH→인증→PDU)을 못 했다.**
-sysmoISIM-SJA5-9FV 주문 대기 중. 재개 절차는 `NEXT.md` 참조.
+**~~유효한 USIM 이 없어 상용 단말 접속(RACH→인증→PDU)을 못 했다.~~**
+sysmoISIM-SJA5 를 발급해 모뎀(2026-10-13)과 차폐함 안 실물 폰(2026-10-15)으로 전부 통했다.
+**이 문서는 거기까지의 기록이고, 현재 지점은 `NEXT.md` 가 가진다.**
 
 ## 남은 일
 
 1. **`SMF_DNS1=8.8.8.8`** — 통신 두절 대비 망인데 외부 DNS 를 본다. `dns` 컨테이너로 변경 필요.
 2. **대시보드** — Grafana :3000, Open5GS WebUI :9999, Prometheus :9090 이미 기동됨. 구성 미착수.
-3. **실장비 RF** — 차폐함/감쇠기 입고 대기 (TOJOIN MS3020-A 주문, 30% 선금 송금)
+3. ~~**실장비 RF** — 차폐함/감쇠기 입고 대기~~ → 입고·사용 중(TOJOIN MS3020-A). 남은 세 줄은 아래 그대로 유효하다.
    - B210 은 USB3 에서 40 MHz(106 PRB) 가 한계선. 실제 RF 는 srsRAN 20 MHz/51 PRB 구성 권장.
    - `~/.uhd/uhd.conf` 시리얼별 FPGA 매핑 미검증 (물리적 재삽입 필요)
    - B210 커넥터가 SMA 인지 RP-SMA 인지 육안 미확인
