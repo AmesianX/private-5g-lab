@@ -1,11 +1,80 @@
 # private5g — 사설 로컬 5G SA 망
 
-리눅스 한 대와 SDR 한 대로 **동작하는 5G 단독(SA) 이동통신망**을 세운다. 상용 단말이
-실제로 붙고, 전화가 울리고, 문자와 사진이 오간다. 목적은 상용망 두절 시 가동할 자체
-통신망이다. 5G SA 로 검증한 뒤 **4G LTE 가 실제 배치 목표**다.
+> **70 년대 해커들에게 프리킹이 있었다면, 지금 우리에게는 로컬 5G 가 있다.**
 
-이 저장소 하나로 **맨바닥에서 같은 망이 선다.** 새로 산 컴퓨터에 리눅스를 깔고 장비도
-새로 사서 붙이는 상황을 전제로 썼다.
+리눅스 한 대와 SDR 한 대로 **동작하는 5G 단독(SA) 이동통신망**을 세운다. 상용 단말이
+실제로 붙고, 전화가 울리고, 문자와 사진이 오간다.
+
+📕 **이 망을 세운 전 과정을 책으로 썼다.** 『로컬 5G 망 구축하기 — 해커를 위한 이동통신 실무서』
+· [**PDF 내려받기**](https://github.com/AmesianX/local-5g-handbook/releases/latest/download/local-5g-handbook-ko.pdf) · [원고 저장소](https://github.com/AmesianX/local-5g-handbook)
+
+<table>
+<tr>
+<td align="center"><img src="docs/screenshots/06-%ED%86%B5%ED%99%94%EC%A4%91.png" width="260" alt="우리 망에서 성립한 VoNR 통화, 상태바에 HD 와 5G"><br><sub>우리 망 위에서 이어진 VoNR 통화. 상태바에 <code>HD</code>·<code>5G</code></sub></td>
+<td align="center"><img src="docs/screenshots/09-%EB%AC%B8%EC%9E%90-270%EC%9E%90%ED%95%9C%ED%86%B5.png" width="260" alt="270 자 문자가 한 통으로 도착한 화면"><br><sub>270 자 문자가 쪼개지지 않고 한 통으로</sub></td>
+</tr>
+</table>
+
+## 왜 이걸 세웠나
+
+1970 년대의 폰 프리커들은 휘파람 하나로 2600 Hz 를 불어 대륙 너머의 교환기를 움직였고, 그
+틈으로 거대한 전화망의 속을 들여다보는 재미에 빠졌다. 그 뒤 반세기 동안 이동통신은 해커에게
+가장 닫힌 영역이었지만, 이제 코어망은 HTTP/2 로 서로를 부르는 리눅스 프로세스가 되었고
+기지국은 USB 에 꽂는 소프트웨어 라디오 위에서 돈다. 프리커들이 교환기를 속일 방법을 찾았다면,
+이제 우리는 **교환기를 직접 가져 볼 수 있는** 셈이다. 비밀 키를 우리가 정해 구운 SIM 으로
+가입자를 받고, 우리가 발급한 번호로 실물 폰의 벨을 울리고, 그 사이에 오가는 모든 메시지를
+와이어샤크로 처음부터 끝까지 따라가 볼 수 있다.
+
+이 망은 놀이로 끝나지도 않는다. 인터넷으로 나가는 출구가 리눅스 박스의 기본 경로 하나뿐이니,
+상용망이 끊긴 곳에 이 박스와 라디오를 들고 가서 위성 단말 하나를 물리면 그 자리에 우리 셀이
+선다. 이 저장소의 실제 목표도 그것, **상용망이 두절됐을 때 가동할 자체 통신망**이다. 5G SA 로
+검증을 마쳤고, 실제 배치 목표는 4G LTE 다.
+
+이 저장소와 책을 공개하는 이유는, 우리가 헤맨 자리마다 표지판을 세워 두고 싶어서다. USB 2.0
+케이블 하나로 반나절을 날리고, 스크립트끼리 넉 달 동안 통하던 전화를 실물 폰이 첫 통화에서
+거절하던 그 자리에서, 다음 사람은 같은 시간을 버리지 않았으면 한다.
+
+## 🤖 손으로 따라 치지 말고, Claude Code 에게 맡기자
+
+이 README 아래쪽에는 맨바닥에서 같은 망을 다시 세우는 절차가 단계마다 확인 방법과 함께 적혀
+있다. 하지만 그것을 한 줄씩 손으로 따라 칠 필요는 없다. 이 저장소를 클론한 디렉터리에서
+[Claude Code](https://claude.com/claude-code) 를 열고 이렇게 맡기면 된다.
+
+```text
+README 의 재구축 가이드대로 이 망을 처음부터 다시 세워 줘.
+단계마다 확인 방법을 통과했는지 보여 주고, 기지국 송신 직전에는 멈춰서 내 확인을 받아.
+```
+
+그러면 업스트림을 받고, 이미지를 올리고, 설정을 렌더하고, 가입자를 넣고, 코어와 IMS 를 띄우는
+일을 확인까지 거치며 순식간에 끝내 준다. 이 절차가 정말 저장소 하나로 서는지는 2026-10-15 에
+데이터베이스 볼륨까지 지운 뒤 GitHub 에서 새로 클론한 저장소만으로 다시 세워 확인했다.
+
+**다만 손에 잡히는 것은 사람이 미리 준비해 두어야 한다.** Claude Code 는 소프트웨어를 세울 뿐,
+카드를 사거나 케이블을 조여 줄 수는 없기 때문이다.
+
+- **USIM** — 키를 써 넣을 수 있는 카드(우리는 sysmoISIM-SJA5)와 PC/SC 카드 리더. 카드와 함께 받은
+  Ki·OPc·ADM1 값을 `configs/secrets/lab.env.example` 을 복사한 `configs/secrets/lab.env` 에 채워 둔다.
+  아래 「0. 장비」의 USIM 함정을 꼭 먼저 읽자.
+- **장비** — USB 3.0 포트가 있는 리눅스 호스트(Ubuntu 24.04), SDR(USRP B210 또는 호환), 단말
+  (Quectel RM520N-GL 5G 모뎀, 또는 실물 폰과 차폐함), 동축 케이블, **40 dB 감쇠기**, 50 Ω 종단기.
+- **배선과 송신 허락** — 케이블을 잇고 감쇠기를 끼우는 일, 그리고 기지국이 처음 송신하기 전에
+  배선을 눈으로 확인하는 일은 사람이 한다. 감쇠기 없이 직결하면 B210 수신단이 타고, 공중으로
+  새면 남의 통신을 방해하게 된다.
+
+---
+
+<a id="english"></a>
+**English.** *Phreaking was the hacker's playground of the 1970s; today, it's building your own local 5G network.*
+This repository brings up a working 5G standalone network — Open5GS core, Kamailio IMS, srsRAN gNB on a USRP B210 —
+on a single Linux box, with real handsets registering, ringing, texting and exchanging pictures, all without radiating
+into the open air (direct coax with attenuators, or a shield box). The whole journey is written up as a book,
+[*Building a Local 5G Network — A Hacker's Field Guide*](https://github.com/AmesianX/local-5g-handbook) ([PDF, Korean](https://github.com/AmesianX/local-5g-handbook/releases/latest/download/local-5g-handbook-ko.pdf)).
+You don't need to type the rebuild guide below by hand: open [Claude Code](https://claude.com/claude-code) in a clone of this
+repository and ask it to rebuild the network following this README. What it can't do is buy or wire hardware, so have the
+USIM (with its Ki/OPc/ADM1 in `configs/secrets/lab.env`), SDR, modem or phone, coax, attenuators and terminators ready
+beforehand, and check the wiring yourself before the first transmission.
+
+---
 
 ## 끝나면 무엇이 되나
 
@@ -17,7 +86,7 @@
 | 영상통화 | video RTP 송신 332 / 수신 2697 (20 초) |
 | 문자 | 길이 제한 없음(UDH 연결 문자). 270 자가 한 통으로 병합 |
 | 멀티미디어(MMS) | 양방향. 단말이 보낸 JPEG 이 원본과 SHA256 동일 |
-| 전파 누설 | 차폐함 밖에서 검출 안 됨(측정 방법과 한계는 12 장) |
+| 전파 누설 | 차폐함 밖에서 검출 안 됨(측정 방법과 한계는 [책 15.5a](https://github.com/AmesianX/local-5g-handbook/blob/master/15-%EC%8B%9C%ED%97%98%EC%A0%88%EC%B0%A8%EC%99%80%EC%B8%A1%EC%A0%95.md)) |
 
 ## ⚠ 송신 전에 반드시
 
@@ -31,7 +100,7 @@
 - 송신 게인은 항상 최소에서 시작
 - 안테나 달린 SDR 이 같은 호스트에 있다면 그 장치가 열리지 않는지 확인(`serial=` 핀)
 
-자세한 것은 [docs/book/부록D-전파와법규고지.md](docs/book/부록D-전파와법규고지.md).
+자세한 것은 [책 부록 D 「전파와 법규 고지」](https://github.com/AmesianX/local-5g-handbook/blob/master/%EB%B6%80%EB%A1%9DD-%EC%A0%84%ED%8C%8C%EC%99%80%EB%B2%95%EA%B7%9C%EA%B3%A0%EC%A7%80.md).
 
 ---
 
@@ -428,7 +497,7 @@ python3 tools/ims_sms_mt.py 172.22.0.20 821099994533 821099994531 "재구축 확
 # 트러블슈팅 — 가장 오래 걸렸던 곳들
 
 구축하면서 실제로 시간을 가장 많이 먹은 순서다. 전체 사례와 추적 과정은
-[docs/book/13-트러블슈팅사례집.md](docs/book/13-트러블슈팅사례집.md) 에 스물두 건으로 있다.
+[책 17 장 「사례집」](https://github.com/AmesianX/local-5g-handbook/blob/master/17-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85%EC%82%AC%EB%A1%80%EC%A7%91.md) 에 스물네 건으로 있다.
 
 ### ① 카드가 USIM 이 아니었다 (며칠)
 증상이 "ADM 이 안 맞는다"로 보여서 ADM 키를 쫓았다. 실제로는 USIM 애플리케이션 자체가
@@ -518,7 +587,7 @@ private5g/
 | [docs/shielding-measurement.md](docs/shielding-measurement.md) | 차폐함 누설 계측 |
 | [docs/rf-cabling.md](docs/rf-cabling.md) | RF 배선 |
 | [docs/frequency-plan.md](docs/frequency-plan.md) | 주파수 계획 |
-| [docs/book/](docs/book/) | 책 《로컬 5G 망 구축》 (별도 저장소) |
+| [local-5g-handbook](https://github.com/AmesianX/local-5g-handbook) | 책 『로컬 5G 망 구축하기』 (별도 저장소, [PDF](https://github.com/AmesianX/local-5g-handbook/releases/latest/download/local-5g-handbook-ko.pdf)) |
 
 ## 추적하지 않는 것
 
