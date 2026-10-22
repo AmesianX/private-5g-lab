@@ -1,5 +1,7 @@
 # private5g — 사설 로컬 5G SA 망
 
+**한국어** · [English](README.en.md)
+
 > **70 년대 해커들에게 프리킹이 있었다면, 지금 우리에게는 로컬 5G 가 있다.**
 
 리눅스 한 대와 SDR 한 대로 **동작하는 5G 단독(SA) 이동통신망**을 세운다. 상용 단말이
@@ -60,19 +62,6 @@ README 의 재구축 가이드대로 이 망을 처음부터 다시 세워 줘.
 - **배선과 송신 허락** — 케이블을 잇고 감쇠기를 끼우는 일, 그리고 기지국이 처음 송신하기 전에
   배선을 눈으로 확인하는 일은 사람이 한다. 감쇠기 없이 직결하면 B210 수신단이 타고, 공중으로
   새면 남의 통신을 방해하게 된다.
-
----
-
-<a id="english"></a>
-**English.** *Phreaking was the hacker's playground of the 1970s; today, it's building your own local 5G network.*
-This repository brings up a working 5G standalone network — Open5GS core, Kamailio IMS, srsRAN gNB on a USRP B210 —
-on a single Linux box, with real handsets registering, ringing, texting and exchanging pictures, all without radiating
-into the open air (direct coax with attenuators, or a shield box). The whole journey is written up as a book,
-[*Building a Local 5G Network — A Hacker's Field Guide*](https://github.com/AmesianX/local-5g-handbook) ([PDF, Korean](https://github.com/AmesianX/local-5g-handbook/releases/latest/download/local-5g-handbook-ko.pdf)).
-You don't need to type the rebuild guide below by hand: open [Claude Code](https://claude.com/claude-code) in a clone of this
-repository and ask it to rebuild the network following this README. What it can't do is buy or wire hardware, so have the
-USIM (with its Ki/OPc/ADM1 in `configs/secrets/lab.env`), SDR, modem or phone, coax, attenuators and terminators ready
-beforehand, and check the wiring yourself before the first transmission.
 
 ---
 
