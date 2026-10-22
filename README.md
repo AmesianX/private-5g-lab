@@ -27,6 +27,22 @@ Nor does it end as a toy. The network's only way out to the internet is the Linu
 
 We publish this repository and the book because we want to leave a signpost at every spot where we got lost. We lost half a day to a single USB 2.0 cable, and watched a real phone reject, on its very first call, a call setup that had worked between our scripts for four months. We would like the next person not to throw away the same hours in the same places.
 
+## The hardware in our lab
+
+<table>
+<tr>
+<td align="center" valign="top"><a href="docs/photos/sim-cards.jpg"><img src="docs/photos/sim-cards.jpg" width="220" alt="sysmoISIM-SJA5 cards (9FV and S17). PIN, PUK and IMSI blurred"></a><br><sub>sysmoISIM-SJA5 cards (9FV and S17). PIN, PUK and IMSI blurred</sub></td>
+<td align="center" valign="top"><a href="docs/photos/shieldbox.jpg"><img src="docs/photos/shieldbox.jpg" width="220" alt="The shield box, TOJOIN MS3020-A"></a><br><sub>The shield box, TOJOIN MS3020-A</sub></td>
+<td align="center" valign="top"><a href="docs/photos/shieldbox-open.jpg"><img src="docs/photos/shieldbox-open.jpg" width="220" alt="Lid open. The phone goes in here"></a><br><sub>Lid open. The phone goes in here</sub></td>
+</tr>
+<tr>
+<td align="center" valign="top"><a href="docs/photos/shieldbox-filter-panel.jpg"><img src="docs/photos/shieldbox-filter-panel.jpg" width="220" alt="Filter panel: RJ45, USB and power feed-throughs, SMA ports"></a><br><sub>Filter panel: RJ45, USB and power feed-throughs, SMA ports</sub></td>
+<td align="center" valign="top"><a href="docs/photos/shieldbox-test-report.jpg"><img src="docs/photos/shieldbox-test-report.jpg" width="220" alt="Factory test report: −101.8 dB at 3.5 GHz"></a><br><sub>Factory test report: −101.8 dB at 3.5 GHz</sub></td>
+</tr>
+</table>
+
+<sub>Click a photo to see it full size.</sub>
+
 ## 🤖 Don't type it in by hand — hand it to Claude Code
 
 Further down, this README describes how to rebuild the same network from bare metal, step by step, with a way to verify each step. You don't have to type it in line by line, though. Open [Claude Code](https://claude.com/claude-code) in a clone of this repository and hand it over like this:
@@ -602,6 +618,22 @@ private5g/
 이 저장소와 책을 공개하는 이유는, 우리가 헤맨 자리마다 표지판을 세워 두고 싶어서다. USB 2.0
 케이블 하나로 반나절을 날리고, 스크립트끼리 넉 달 동안 통하던 전화를 실물 폰이 첫 통화에서
 거절하던 그 자리에서, 다음 사람은 같은 시간을 버리지 않았으면 한다.
+
+## 우리 실험실의 장비
+
+<table>
+<tr>
+<td align="center" valign="top"><a href="docs/photos/sim-cards.jpg"><img src="docs/photos/sim-cards.jpg" width="220" alt="sysmoISIM-SJA5 카드 두 종(9FV·S17). PIN·PUK·IMSI 는 가렸다"></a><br><sub>sysmoISIM-SJA5 카드 두 종(9FV·S17). PIN·PUK·IMSI 는 가렸다</sub></td>
+<td align="center" valign="top"><a href="docs/photos/shieldbox.jpg"><img src="docs/photos/shieldbox.jpg" width="220" alt="차폐함 TOJOIN MS3020-A"></a><br><sub>차폐함 TOJOIN MS3020-A</sub></td>
+<td align="center" valign="top"><a href="docs/photos/shieldbox-open.jpg"><img src="docs/photos/shieldbox-open.jpg" width="220" alt="뚜껑을 연 차폐함. 이 안에 폰이 들어간다"></a><br><sub>뚜껑을 연 차폐함. 이 안에 폰이 들어간다</sub></td>
+</tr>
+<tr>
+<td align="center" valign="top"><a href="docs/photos/shieldbox-filter-panel.jpg"><img src="docs/photos/shieldbox-filter-panel.jpg" width="220" alt="필터 패널: RJ45·USB·전원 관통과 SMA 단자"></a><br><sub>필터 패널: RJ45·USB·전원 관통과 SMA 단자</sub></td>
+<td align="center" valign="top"><a href="docs/photos/shieldbox-test-report.jpg"><img src="docs/photos/shieldbox-test-report.jpg" width="220" alt="공장 시험 성적서: 3.5 GHz 에서 −101.8 dB"></a><br><sub>공장 시험 성적서: 3.5 GHz 에서 −101.8 dB</sub></td>
+</tr>
+</table>
+
+<sub>사진을 누르면 크게 볼 수 있다.</sub>
 
 ## 🤖 손으로 따라 치지 말고, Claude Code 에게 맡기자
 

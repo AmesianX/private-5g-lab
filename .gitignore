@@ -33,6 +33,7 @@
 # 문서와 화면 증거
 !docs/*.md
 !docs/screenshots/*.png
+!docs/photos/*.jpg
 
 # ── 아래는 어떤 경우에도 올리지 않는다 ──
 configs/secrets/lab.env
